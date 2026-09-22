@@ -1,0 +1,29 @@
+@import 'slidev-theme-field-manual/styles/code.css';
+
+/* Keep this code panel dark while the slide and surrounding theme stay light. */
+.code-dark .fm-code-container {
+	background: #1e2214;
+	border-color: #b5a060;
+	color: #e8e0c8;
+}
+
+.code-dark .fm-code-header {
+	background: #2a3018;
+	border-bottom-color: #5c5c30;
+}
+
+.code-dark .fm-code-title,
+.code-dark .fm-code-lang-badge {
+	color: #e8e0c8;
+}
+
+.code-dark .fm-code-lang-badge {
+	border-color: #b5a060;
+}
+
+.code-dark .shiki span,
+.code-dark .slidev-code span {
+	color: var(--shiki-dark) !important;
+	font-style: var(--shiki-dark-font-style, normal) !important;
+	font-weight: var(--shiki-dark-font-weight, inherit) !important;
+}
