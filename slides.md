@@ -122,6 +122,8 @@ graph LR;
 ```
 
 <!--
+  Esta será una plática técnica más que teórica, con el objetivo de que recuerden vagamente los conceptos para cuando estén haciendo cualquier cosa relacionada.
+
   Este será un viaje de descubrimiento en el que estaremos viendo, de principio a fin, la mayoría (o todas) las herramientas que se usan para asegurar un flujo contínuo de vida de tus aplicaciones, desde el código hasta la distribución.
 -->
 
@@ -155,14 +157,14 @@ docNumber: FM 42-00
   <span v-click>
     <li>Compilación</li>
     <ul>
-      <li>Precompilaciones y tests</li>
+      <li>Precompilaciones, compilaciones y tests</li>
       <li>Docker</li>
     </ul>
   </span>
   <span v-click>
     <li>Distribución</li>
     <ul>
-      <li>CI/CD</li>
+      <li>Integración Contínua</li>
     </ul>
   </span>
 </ul>
@@ -186,7 +188,7 @@ docNumber: FM 42-00
 
 ---
 layout: section
-sectionNumber: '2'
+sectionNumber: '1'
 docNumber: FM 42-01
 ---
 
@@ -216,7 +218,10 @@ Es un núcleo para un sistema operativo que tiene muchas cualidades, entre ellas
 <!--
 Podría, y he dado clases completas hablando exclusivamente de linux, como núcleo y como "sistema operativo".
 
-Lo importante aquí es los básicos
+Lo importante aquí es los básicos.
+
+Todo es un archivo: No hay editor de registros, todos los archivos de configuración suelen ser archivos de texto sencillos, puedes partes enormes del sistema cambando un solo archivo.
+
 -->
 
 ---
@@ -232,15 +237,31 @@ Es un acceso a la terminal (shell), y un lenguaje de programación para Linux.
 
 ````md magic-move
 ```bash
-ls                # Lista los archivos
-mkdir folder      # Crea un folder/directorio
-mv arhivo destino # Mueve un archivo al directorio
+# Lista los archivos
+ls
+
+# Crea un folder/directorio
+mkdir folder
+
+# Mueve un archivo al directorio
+mv arhivo destino
+
+# Comprime un directorio
+tar argumentos folder
 ```
 ```bash
-ls -al | grep *.jpg # Lista las fotos en el folder actual
-mkdir photos        # Crea un nuevo folder
-mv *.jpg photos/    # Mueve todas las fotos al nuevo folder
-```
+# Lista las fotos en el folder actual
+ls -al | grep *.jpg
+
+# Crea un nuevo folder
+mkdir photos
+
+# Mueve todas las fotos al nuevo folder
+mv *.jpg photos/
+
+# Comprime las fotos
+tar czf photos.tar.gz photos/
+``` 
 ````
 
 </CodeBlock>
@@ -340,10 +361,13 @@ layout: default
 title: GIT - Sanctissima Trinitas
 ---
 
-Estos son los únicos tres comandos que necesitas para tener un proyecto en Git.
+
+<span class="mb-2">
+  Estos son los únicos tres comandos que necesitas en Git
+</span>
 
 
-<div class="code-dark">
+<div class="code-dark mb-2">
 <CodeBlock lang="bash" title="GIT- Sanctissima Trinitas">
 
 
@@ -375,62 +399,6 @@ git push origin/main
 </div>
 
 Para generar un historial
-
-```mermaid
----
-config:
-  logLevel: 'debug'
-  theme: 'base'
-  gitGraph:
-    showCommitLabel: false
----
-    gitGraph
-       branch "origin/main"
-       checkout main
-       commit
-       commit
-       commit
-       checkout "origin/main"
-       commit
-       merge "main"
-```
-
-
-
----
-layout: default
-title: Sanctissima Trinitas
----
-
-### Git
-#### Sanctissima Trinitas
-
-
-````md magic-move
-```sh {1-2|4-5|7-8|all}
-# Inicializamos el repositorio
-git init
-
-# Agregamos archivos y creamos un commit
-git add * && git commit -m "Mensaje de commit"
-
-# Mandamos el commit al servidor
-git push remote/branch
-```
-
-```sh
-# ¿Y si copiamos el repositorio desde otro lugar?
-git clone https://github.com/ytnrvdf/wha-spell-simulator.git
-
-# Agregamos archivos de C y creamos un commit
-git add *.cpp && git commit -m "Se agregó un punto y coma"
-
-# Mandamos el commit al servidor
-git push origin/main
-```
-````
-
-Estos son los únicos tres comandos que necesitas para tener un proyecto en Git.
 
 ```mermaid
 ---
@@ -511,59 +479,165 @@ layout: default
 title: Git Hooks
 ---
 
-### Hooks
+# Hooks
 
-Útiles 
+Permiten establecer reglas, rutinas o scripts que hagan cualquier tipo de proceso en el código, antes de enviarlo al servidor, o incluso, antes de hacer commit.
 
+Ejemplo: Puedes establecer reglas de estilo para el código, estas son verificadas por un *linter*;
+
+<div class="code-dark">
+<CodeBlock lang="bash" title="Ejemplo básico de BASH">
+
+````md magic-move
+```js
+const d20 = Math.floor(Math.random() * 10);;
+if(d20==20){ print("Nat 20")}
+else if(d20>=10){ print("Hit")}
+else{ print("Damaged")
+}
+```
+```js
+const d20 = Math.floor(Math.random() * 10);;
+if (d20 == 20) {
+    print("Nat 20");
+} else if (d20 >= 10) {
+    print("Hit");
+} else {
+    print("Damaged")
+//                 ^? Falta punto y coma
+}
+```
+````
+
+</div>
+</CodeBlock>
+
+> **Recordatorio:** Si bien los hooks funcionan tanto en el servidor y como en el cliente, suelen ser complicados de configurar en el servidor.
+
+<!-- **Recordatorio:** Nunca confíes en tus usuarios, incluso si son programadores. -->
 
 ---
-layout: chart-full
-figNumber: 3-1
-figLabel: BRIEFING WORKFLOW
+
+## Hosteando el código
+
+Ya que tienes tu código de la forma que necesitas, en un *repositorio* git, es momento de plantear como lo vas a compartir.
+
+Opciones:
+
+<span v-click.hide>
+
+- Un servidor de archivos convencional (SFTP/SMB)
+- Por mensajes de whatsapp, en un *.zip*.
+
+</span>
+
+<span v-click>
+
+Un servidor de código:
+
+  - Github
+  - Gitlab
+  - BitBucket
+  - GitTea
+
+</span>
+
+<!--
+Si nos tomamos la molestia de hacer un repositorio de git, el crear un sistema de folders en un servidor convencional o de nombres por whatsapp es dar un paso adelante y dos pasos atrás.
+
+GitTea es para aquellos que se atrevan a hacer su propio sistema de hosteo.
+-->
+
+---
+layout: section
+sectionNumber: '2'
+docNumber: FM 42-02
 ---
 
-### Linux
+# Capítulo 2
+## Compilando el código
+
+<template v-slot:descriptor>
+Compilaciones reproducibles
+</template>
+
+---
+
+### Tengo el código, ¿Y ahora?
+
+Lo compilas, y verificas que las pruebas pasen y los linters no arrojen problemas.
+
+`gcc` para C y C++, `npm build` para proyectos de NodeJS. Incluso en proyectos con PHP o Python que son lenguajes interpretados es necesario este paso.
+
+El objetivo es generar un programa de manera consistente, no sólo una vez si no todas. Resolución de dependencias, estructura de folders, architectura del CPU, todo debe estar documentado y ser reproducible.
+
+---
+layout: default
+---
+
+## Docker
+
+> En mi máquina si funciona - Todos, alguna vez
+
+Más de una vez he escuchado estas palabras de parte de un programador, incluyéndome.
+
+Son muchas las causas que pueden hacer que un programa no sea *portable*, una forma de resolver este problema es con el uso de contenedores de Docker, Dockers.
+
+<!-- Ya sea una dependencia que se instaló fuera de lugar, un folder que no se creó, un archivo que no se configuró, o la cantidad de pantallas conectadas a una computadora puede hacer que el programa funcione en un dispositivo y otro no. -->
+
+---
+layout: default
+title: Docker storage.
+---
 
 ```mermaid
+flowchart LR
+    subgraph BUILD["Compilación"]
+        Dev["Developer"]
+        DFile["Dockerfile"]
+        BImage["docker build"]
+        DImage["Docker Image\n- Application\n- Runtime\n- Dependencies"]
+
+        Dev -->|"Escribe código"| DFile
+        DFile -->|"Compila"| BImage
+        BImage -->|"Crea"| DImage
+    end
+
+    subgraph SHARE["Compartir"]
+        Reg["Registry\n(Docker Hub / Private)"]
+        
+        DImage -->|"docker push"| Reg
+        Reg -.->|"docker pull"| DImage
+    end
+
+    subgraph RUN["Correr"]
+        RCont["docker run"]
+        RCont_Instance["Running Container\n(Isolated Process)"]
+
+        DImage -->|"Instantiates"| RCont
+        RCont -->|"Spins up"| RCont_Instance
+    end
+```
+
+
 ---
-mermaid:
-  theme: base
-  fontFamily: "'Courier Prime', monospace"
-  themeVariables:
-    background: '#f5f0e0'
-    primaryColor: '#ede8d0'
-    primaryTextColor: '#1a1a14'
-    primaryBorderColor: '#8a7a50'
-    lineColor: '#4a4a2a'
+layout: default
+title: Docker ejemplos
 ---
-architecture-beta
-    group sources(cloud)[Sources]
-        service src_a(server)[Source A] in sources
-        service src_b(server)[Source B] in sources
-        service src_c(server)[Source C] in sources
 
-    group storage(database)[Storage]
-        service db_one(database)[DB One] in storage
-        service db_two(database)[DB Two] in storage
-        service db_three(database)[DB Three] in storage
 
-    group output(disk)[Output]
-        service brief(disk)[Brief] in output
-        service analyst(server)[Analyst] in output
-        service delivery(cloud)[Delivery] in output
+### ¿Cómo funciona un dockerfile?
 
-    src_a:B --> T:db_one
-    src_b:B --> T:db_two
-    src_c:B --> T:db_three
-    db_two:B --> T:brief
-    brief:R --> L:analyst
-    analyst:R --> L:delivery
+```sh
+# FRONTEND BUILD
+# Built on the native build platform: the output (/front/dist) is static JS/CSS,
+# fully architecture-independent, so there is no need to emulate the target arch.
+FROM --platform=$BUILDPLATFORM node:${NODE_VERSION}-alpine${ALPINE_VERSION}@sha256:${NODE_ALPINE_SHA256} AS frontend-build
+WORKDIR /front
 
-    align row src_a src_b src_c
-    align row db_one db_two db_three
-    align row brief analyst delivery
+COPY ./frontend/package*.json ./
+RUN npm ci --ignore-scripts --no-audit --no-fund
 
-    align column src_a db_one
-    align column src_b db_two brief
-    align column src_c db_three
+COPY ./frontend ./
+RUN npm run build
 ```
