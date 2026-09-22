@@ -424,14 +424,14 @@ config:
 ---
 layout: default
 title: Pero ¿Dónde está la magia en eso?
-codeTitle: Pero ¿Dónde está la magia en eso?
-codeLang: bash
 ---
 
 <div class="code-dark">
 <CodeBlock lang="bash" title="Ejemplo básico de BASH">
 
+
 ````md magic-move
+
 ```sh {1-2|4-5|7-8|10-13|15-16|all}
 # ¿Y si empezamos a trabajar en otras cosas?
 git switch -c branch
@@ -469,7 +469,9 @@ git revert HASH
 # Destruyendo el universo local (Volver al futuro)
 git reset --hard HEAD@{30.minutes.ago}
 ```
+
 ````
+
 
 </CodeBlock>
 </div>
@@ -486,7 +488,7 @@ Permiten establecer reglas, rutinas o scripts que hagan cualquier tipo de proces
 Ejemplo: Puedes establecer reglas de estilo para el código, estas son verificadas por un *linter*;
 
 <div class="code-dark">
-<CodeBlock lang="bash" title="Ejemplo básico de BASH">
+<CodeBlock lang="javsacript" title="Ejemplo de cómo se ve el código antes y después">
 
 ````md magic-move
 ```js
@@ -496,6 +498,7 @@ else if(d20>=10){ print("Hit")}
 else{ print("Damaged")
 }
 ```
+
 ```js
 const d20 = Math.floor(Math.random() * 10);;
 if (d20 == 20) {
@@ -509,8 +512,8 @@ if (d20 == 20) {
 ```
 ````
 
-</div>
 </CodeBlock>
+</div>
 
 > **Recordatorio:** Si bien los hooks funcionan tanto en el servidor y como en el cliente, suelen ser complicados de configurar en el servidor.
 
@@ -628,7 +631,10 @@ title: Docker ejemplos
 
 ### ¿Cómo funciona un dockerfile?
 
-```sh
+<div class="code-dark">
+<CodeBlock lang="bash" title="Ejemplo básico de BASH">
+
+```dockerfile
 # FRONTEND BUILD
 # Built on the native build platform: the output (/front/dist) is static JS/CSS,
 # fully architecture-independent, so there is no need to emulate the target arch.
@@ -641,3 +647,6 @@ RUN npm ci --ignore-scripts --no-audit --no-fund
 COPY ./frontend ./
 RUN npm run build
 ```
+
+</CodeBlock>
+</div>
