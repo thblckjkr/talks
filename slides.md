@@ -104,6 +104,26 @@ const techStack2 = [...tech].sort(() => Math.random() - 0.5);
 
 
 ---
+sectionNumber: '0'
+docNumber: FM 42-00
+title: QR - Recursion
+---
+
+<span>
+  <img
+    src="./assets/qr-code.png"
+    class="w-full object-contain max-h-90"
+    alt="https://talsk.teogonzalez.dev"
+  />
+</span>
+
+<br />
+
+<b class="text-center w-auto text-4xl mt-4">
+  https://talks.teogonzalez.dev
+</b>
+
+---
 layout: section
 docNumber: FM 42-00
 ---
