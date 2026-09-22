@@ -588,40 +588,6 @@ Son muchas las causas que pueden hacer que un programa no sea *portable*, una fo
 
 <!-- Ya sea una dependencia que se instaló fuera de lugar, un folder que no se creó, un archivo que no se configuró, o la cantidad de pantallas conectadas a una computadora puede hacer que el programa funcione en un dispositivo y otro no. -->
 
----
-layout: default
-title: Docker storage.
----
-
-```mermaid
-flowchart LR
-    subgraph BUILD["Compilación"]
-        Dev["Developer"]
-        DFile["Dockerfile"]
-        BImage["docker build"]
-        DImage["Docker Image\n- Application\n- Runtime\n- Dependencies"]
-
-        Dev -->|"Escribe código"| DFile
-        DFile -->|"Compila"| BImage
-        BImage -->|"Crea"| DImage
-    end
-
-    subgraph SHARE["Compartir"]
-        Reg["Registry\n(Docker Hub / Private)"]
-        
-        DImage -->|"docker push"| Reg
-        Reg -.->|"docker pull"| DImage
-    end
-
-    subgraph RUN["Correr"]
-        RCont["docker run"]
-        RCont_Instance["Running Container\n(Isolated Process)"]
-
-        DImage -->|"Instantiates"| RCont
-        RCont -->|"Spins up"| RCont_Instance
-    end
-```
-
 
 ---
 layout: default
@@ -631,14 +597,18 @@ title: Docker ejemplos
 
 ### ¿Cómo funciona un dockerfile?
 
-<div class="code-dark">
-<CodeBlock lang="bash" title="Ejemplo básico de BASH">
+Es una mezcla entre scripting habitual de bash, con una sintaxis especial que permite especificar fuertemente dónde y cómo suceden las cosas.
 
+<div class="code-dark">
+<CodeBlock lang="dockerfile" title="Extracto de dockerfile de ROMM">
+
+````md magic-move
 ```dockerfile
 # FRONTEND BUILD
 # Built on the native build platform: the output (/front/dist) is static JS/CSS,
-# fully architecture-independent, so there is no need to emulate the target arch.
-FROM --platform=$BUILDPLATFORM node:${NODE_VERSION}-alpine${ALPINE_VERSION}@sha256:${NODE_ALPINE_SHA256} AS frontend-build
+FROM --platform=$BUILDPLATFORM \
+  node:${NODE_VERSION}-alpine${ALPINE_VERSION}@sha256:${NODE_ALPINE_SHA256} \
+  AS frontend-build
 WORKDIR /front
 
 COPY ./frontend/package*.json ./
@@ -647,6 +617,122 @@ RUN npm ci --ignore-scripts --no-audit --no-fund
 COPY ./frontend ./
 RUN npm run build
 ```
+````
 
 </CodeBlock>
 </div>
+
+
+---
+layout: section
+sectionNumber: '3'
+docNumber: FM 42-03
+---
+
+# Capítulo 3
+## Distribución
+
+<template v-slot:descriptor>
+Distribución e integración contínua
+</template>
+
+---
+
+## Integración contínua
+
+### Proveedores de **ejecución** de integración contínua
+
+- Gitlab (CI)*
+- Github (Actions)
+- Jenkins*
+- CircleCI
+- BitBucket Pipelines
+
+Mención honorífica: Netlify
+
+
+---
+layout: section
+sectionNumber: '4'
+docNumber: FM 42-04
+---
+
+# Appendix: Vida real
+
+<template v-slot:descriptor>
+Distribución e integración contínua
+</template>
+
+---
+layout: chart-full
+---
+
+
+<template v-slot:chart>
+
+```mermaid  {theme: 'neutral', scale: 0.8}
+flowchart TB
+    subgraph BUILD ["COMPILACION"]
+        direction LR
+        Dev["Desarrollador"] -->|"Escribe"| DFile["Dockerfile"]
+        DFile -->|"docker build"| DImage["Docker Image"]
+    end
+
+    subgraph SHARE ["DISTRIBUCIÓN"]
+        direction LR
+        Reg["Registry\n(Docker Hub / Private)"]
+    end
+
+    %% Vertical link connecting the two subgraphs
+    BUILD -->|"docker push"| SHARE
+```
+
+</template>
+
+<template v-slot:source>
+Ejemplo de distribución de un dockerfile
+</template>
+
+::right::
+
+## Ejemplo de distribución de una APK
+
+
+---
+layout: section
+sectionNumber: '5'
+docNumber: FM 42-05
+---
+
+# Agradecimientos
+
+<template v-slot:descriptor>
+A mi esposa, por apoyarme con este proyecto que hice a último minuto.
+</template>
+
+
+---
+layout: section
+docNumber: FM 42-00-REF
+---
+
+# Referencias
+
+<template v-slot:descriptor>
+
+- Unix in 24 Hours - Dave Taylor
+- [XKCD #927](https://xkcd.com/927/)
+- [Git Guides - Github](https://github.com/git-guides/install-git)
+- [The RomM project](https://romm.app/)
+</template>
+
+---
+layout: section
+docNumber: FM 42-00-QA
+---
+
+# Q&A
+
+<template v-slot:descriptor>
+¿Preguntas?
+</template>
