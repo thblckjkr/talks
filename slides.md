@@ -60,6 +60,7 @@ const tech = [
 ]
 // Randomizes the tech stack to make it look cooler
 const techStack = [...tech].sort(() => Math.random() - 0.5);
+const techStack2 = [...tech].sort(() => Math.random() - 0.5);
 </script>
 
 <!-- Slide container wrapper (or relative block) -->
@@ -94,7 +95,8 @@ const techStack = [...tech].sort(() => Math.random() - 0.5);
 
   <div v-click class="mt-4">
     <p v-click>Herramientas</p>
-    <InfiniteTicker :items="techStack" :duration="15" />
+    <InfiniteTicker :items="techStack" :duration="25" />
+    <InfiniteTicker :items="techStack2" :duration="20" />
   </div>
 </div>
 
@@ -181,11 +183,15 @@ docNumber: FM 42-00
 
 > No hay tal cosa como un estándar para nada de esto.
 
-<img v-click
-  src="./assets/standards.png"
-  class="w-full object-contain max-h-60"
-  alt="XKCD #927: There is no such thing as a standard"
-/>
+<span v-click>
+  <img
+    src="./assets/standards.png"
+    class="w-full object-contain max-h-60"
+    alt="XKCD #927 - How standards proliferate"
+  />
+
+  <FigureCaption number="1-1" label="XKCD #927 - How standards proliferate" />
+</span>
 
 ---
 layout: section
@@ -237,7 +243,7 @@ Es un acceso a la terminal (shell), y un lenguaje de programación para Linux.
 <CodeBlock lang="bash" title="Ejemplo básico de BASH">
 
 ````md magic-move
-```bash
+```sh
 # Lista los archivos
 ls
 
@@ -250,7 +256,8 @@ mv arhivo destino
 # Comprime un directorio
 tar argumentos folder
 ```
-```bash
+
+```sh
 # Lista las fotos en el folder actual
 ls -al | grep *.jpg
 
@@ -262,11 +269,12 @@ mv *.jpg photos/
 
 # Comprime las fotos
 tar czf photos.tar.gz photos/
-``` 
+```
 ````
 
 </CodeBlock>
 </div>
+
 
 ---
 
@@ -319,7 +327,7 @@ treeView-beta
 
 ¿Y si pudiera verse mejor?
 
-```mermaid
+```mermaid {scale: 1.3}
 gitGraph TB:
   commit id: "Números irracionales" tag: "0.1"
   commit id: "Restas"
@@ -733,7 +741,10 @@ Más de una vez he escuchado estas palabras de parte de un programador, incluyé
 
 Son muchas las causas que pueden hacer que un programa no sea *portable*, una forma de resolver este problema es con el uso de contenedores de Docker, Dockers.
 
+Estos contenedores, se configuran con unos archivos llamados *dockerfiles*.
+
 <!-- Ya sea una dependencia que se instaló fuera de lugar, un folder que no se creó, un archivo que no se configuró, o la cantidad de pantallas conectadas a una computadora puede hacer que el programa funcione en un dispositivo y otro no. -->
+
 
 
 ---
@@ -804,6 +815,8 @@ Mención honorífica: Netlify
 Se parte de una imagen de docker, en la cual se ejecutan una serie de scripts.
 
 Generalmente se escriben instrucciones en **yaml** y se envían junto con el repositorio.
+
+Estas instrucciones hacen uso de todas las herramientas que ya vimos, aquí se verifica, compila y se prueba el código, antes de publicarlo en una plataforma.
 
 ---
 layout: two-column
@@ -895,27 +908,30 @@ col3Header: Un sitio web en PHP
 
 ::col1::
 
-#### Una app Android
+**Artefacto:** Archivo `.apk` o `.aab`
 
-- **Artefacto:** Archivo `.apk` o `.aab`
-- **Mecanismo:** Firmado de código (*code signing*) y subida a tiendas (Google Play Store, F-Droid).
-- **Herramientas:** Gradle, Fastlane.
+**Mecanismo:** Firmado de código (*code signing*) y subida a tiendas (Google Play Store, F-Droid).
+
+**Herramientas:** Gradle, Fastlane.
+
 
 ::col2::
 
-#### Un .exe para Windows
+**Artefacto:** Binario ejecutable o instalador `.msi`
 
-- **Artefacto:** Binario ejecutable o instalador `.msi`
-- **Mecanismo:** Compilado a código nativo, empaquetado de librerías y firmado digital.
-- **Herramientas:** Inno Setup, WiX Toolset, PyInstaller / Electron.
+**Mecanismo:** Compilado a código nativo, empaquetado de librerías y firmado digital.
+
+**Herramientas:** Inno Setup, WiX Toolset, PyInstaller / Electron.
+
 
 ::col3::
 
-#### Un sitio web en PHP
+**Artefacto:** Archivos desplegados en el servidor web.
 
-- **Artefacto:** Archivos desplegados en el servidor web.
-- **Mecanismo:** Transferencia de archivos e invalidación de caché / reinicio de servicios.
-- **Herramientas:** SSH / rsync, Capistrano, Docker containers, CI/CD pipelines.
+**Mecanismo:** Transferencia de archivos e invalidación de caché / reinicio de servicios.
+
+**Herramientas:** SSH / rsync, Capistrano, Docker containers, CI/CD pipelines.
+
 
 <!-- La distribución depende completamente de tu lenguaje de programación, sistema de empaquetado y miles de cosas más -->
 

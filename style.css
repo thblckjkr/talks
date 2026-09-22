@@ -27,3 +27,8 @@
 	font-style: var(--shiki-dark-font-style, normal) !important;
 	font-weight: var(--shiki-dark-font-weight, inherit) !important;
 }
+
+.slidev-layout {
+	width: 100%;
+	height: 100%;
+}

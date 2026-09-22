@@ -5,38 +5,37 @@ withDefaults(
     duration?: number // duration in seconds for one full loop
   }>(),
   {
-    duration: 15
+    duration: 20
   }
 )
 </script>
 
 <template>
-  <!-- Container height capped to show roughly 4 items (4 * h-5 + gaps) -->
-  <div class="relative h-[12.5rem] overflow-hidden">
+  <div class="ticker-container w-full overflow-hidden whitespace-nowrap py-2">
     <div
-      class="ticker-track flex flex-col gap-3"
+      class="ticker-track inline-flex gap-8"
       :style="{ animationDuration: `${duration}s` }"
     >
       <!-- Original track -->
-      <div class="flex flex-col gap-3 shrink-0">
-        <div
+      <div class="flex gap-8 shrink-0 items-center">
+        <span
           v-for="(item, index) in items"
           :key="`orig-${index}`"
-          class="flex items-center h-5 px-4 text-base font-mono"
+          class=""
         >
-          <li>{{ item }}</li>
-        </div>
+          {{ item }}
+        </span>
       </div>
 
       <!-- Duplicate track for seamless loop -->
-      <div class="flex flex-col gap-3 shrink-0" aria-hidden="true">
-        <div
+      <div class="flex gap-8 shrink-0 items-center" aria-hidden="true">
+        <span
           v-for="(item, index) in items"
           :key="`dup-${index}`"
-          class="flex items-center h-5 px-4 text-base font-mono"
+          class=""
         >
-          <li>{{ item }}</li>
-        </div>
+          {{ item }}
+        </span>
       </div>
     </div>
   </div>
@@ -44,15 +43,15 @@ withDefaults(
 
 <style scoped>
 .ticker-track {
-  animation: scroll-up linear infinite;
+  animation: scroll-left linear infinite;
 }
 
-@keyframes scroll-up {
+@keyframes scroll-left {
   0% {
-    transform: translateY(0);
+    transform: translateX(0);
   }
   100% {
-    transform: translateY(-50%);
+    transform: translateX(-50%);
   }
 }
 </style>
